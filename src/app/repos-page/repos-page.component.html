@@ -1,15 +1,6 @@
-<ng-container *ngIf="repos$ | async as repos">
-  <div>Total: {{ repos.total_count }}</div>
-  <div *ngFor="let repo of repos.items">
-    {{ repo.name }}
-  </div>
-</ng-container>
+<app-repos-filter (filterChange)="filterChange($event)"></app-repos-filter>
 
-<hr />
-
-<ng-container *ngIf="issues$ | async as issue">
-  <div>Total: {{ issue.total_count }}</div>
-  <div *ngFor="let issue of issue.items">
-    {{ issue.repository_url }}
-  </div>
-</ng-container>
+<app-repos-list
+  *ngIf="results$ | async as results"
+  [results]="results"
+></app-repos-list>

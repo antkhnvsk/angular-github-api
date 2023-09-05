@@ -1,0 +1,15 @@
+<div *ngIf="isBlank(results) as blankResults">
+  {{ blankResults.blankMessage }}
+</div>
+
+<ng-container *ngIf="isRepoResults(results) as repoResults">
+  <div *ngFor="let repo of repoResults.items">
+    {{ repo.name }}
+  </div>
+</ng-container>
+
+<ng-container *ngIf="isIssuesResults(results) as issuesResults">
+  <div *ngFor="let issue of issuesResults.items">
+    {{ issue.repository_url }}
+  </div>
+</ng-container>

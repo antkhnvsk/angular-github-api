@@ -11,6 +11,12 @@ export interface SearchResults<T> {
   total_count: number;
 }
 
+export interface BlankResults {
+  blankMessage: string;
+}
+
 export type ReposResults = SearchResults<Repo>;
 
 export type IssuesResults = SearchResults<Issue>;
+
+export type AnyResults = ReposResults | IssuesResults | BlankResults;
