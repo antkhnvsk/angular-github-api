@@ -5,6 +5,8 @@ import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { SearchFilter } from '../models';
 import { debounceTime } from 'rxjs';
 
+const INPUT_DEBOUNCE_TIME = 500;
+
 @Component({
   selector: 'app-repos-filter',
   standalone: true,
@@ -43,11 +45,10 @@ export class ReposFilterComponent implements OnInit {
 
     this.form.valueChanges
       .pipe(
-        debounceTime(1000),
+        debounceTime(INPUT_DEBOUNCE_TIME),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => this.filterChange.emit(this.form.getRawValue()));
   }
-
 }
 

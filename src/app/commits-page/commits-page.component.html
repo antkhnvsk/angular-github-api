@@ -1,1 +1,8 @@
-{{ repo$ | async | json }}
+<h2>List of commits for {{ repo$ | async }}</h2>
+
+<ng-container *ngIf="commits$ | async as commits">
+  <div *ngFor="let commit of commits">
+    {{ commit.commit.message }} / {{ commit.commit.author.name }} /
+    {{ commit.url }}
+  </div>
+</ng-container>

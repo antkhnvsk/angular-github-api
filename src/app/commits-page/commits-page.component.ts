@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
+import { map, switchMap } from 'rxjs';
+import { GithubApiService } from '../api';
 
 @Component({
   standalone: true,
@@ -11,6 +13,8 @@ import { map } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CommitsPageComponent {
-  repo$ = this.ac.params.pipe(map((data) => decodeURIComponent(data['repo'])));
-  constructor(private ac: ActivatedRoute) { }
+  repo$ = this.activatedRoute.params.pipe(map((data) => decodeURIComponent(data['repo'])));
+  commits$ = this.repo$.pipe(switchMap(repo => this.githubApiService.commits(repo)));
+
+  constructor(private activatedRoute: ActivatedRoute, private githubApiService: GithubApiService) { }
 }
