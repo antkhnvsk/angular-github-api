@@ -1,0 +1,1 @@
+export * from './name-from-url.pipe'

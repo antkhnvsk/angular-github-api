@@ -4,12 +4,12 @@
 
 <ng-container *ngIf="isRepoResults(results) as repoResults">
   <div *ngFor="let repo of repoResults.items">
-    {{ repo.name }}
+    {{ repo.full_name }}
   </div>
 </ng-container>
 
 <ng-container *ngIf="isIssuesResults(results) as issuesResults">
   <div *ngFor="let issue of issuesResults.items">
-    {{ issue.repository_url }}
+    {{ issue.repository_url | nameFromUrl }}
   </div>
 </ng-container>

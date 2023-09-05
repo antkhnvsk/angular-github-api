@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AnyResults, BlankResults, IssuesResults, Repo, ReposResults, SearchResults } from '../models';
+import { NameFromUrlPipe } from '../pipes';
 
 @Component({
   selector: 'app-repos-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NameFromUrlPipe],
   templateUrl: './repos-list.component.html',
   styleUrls: ['./repos-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

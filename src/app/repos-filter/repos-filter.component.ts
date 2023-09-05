@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { SearchFilter } from '../models';
@@ -13,7 +13,7 @@ import { debounceTime } from 'rxjs';
   styleUrls: ['./repos-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ReposFilterComponent {
+export class ReposFilterComponent implements OnInit {
   form = this.fb.group({
     query: '',
     minStars: 0,
@@ -23,12 +23,28 @@ export class ReposFilterComponent {
 
   @Output() filterChange = new EventEmitter<SearchFilter>();
 
-  constructor(private fb: NonNullableFormBuilder) {
+  constructor(private fb: NonNullableFormBuilder, private destroyRef: DestroyRef) {
+  }
+
+  ngOnInit(): void {
+    const scopeFC = this.form.controls.searchScope;
+
+    scopeFC.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(scope => {
+        if (scope == 'repos') {
+          this.form.controls.minStars.enable();
+          this.form.controls.language.enable();
+        } else {
+          this.form.controls.minStars.disable();
+          this.form.controls.language.disable();
+        }
+      });
 
     this.form.valueChanges
       .pipe(
         debounceTime(1000),
-        takeUntilDestroyed()
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => this.filterChange.emit(this.form.getRawValue()));
   }

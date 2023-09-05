@@ -7,6 +7,7 @@ import { AnyResults, BlankResults, IssuesResults, ReposResults, SearchFilter, Se
 import { ReposListComponent } from '../repos-list/repos-list.component';
 
 const LOADING_TEXT = 'Loading...';
+const INIT_TEXT = 'Clarify filter to start search';
 
 @Component({
   standalone: true,
@@ -22,14 +23,16 @@ export class ReposPageComponent implements OnInit {
   constructor(private githubApiService: GithubApiService) { }
 
   ngOnInit(): void {
-    this.results$ = this.filter$
-      .pipe(switchMap(filter => {
+    this.results$ = this.filter$.pipe(
+      switchMap(filter => {
         const search$: Observable<AnyResults> = filter.searchScope == 'repos'
           ? this.githubApiService.searchRepos(filter.query, filter.minStars, filter.language)
           : this.githubApiService.searchIssues(filter.query);
 
         return search$.pipe(startWith({ blankMessage: LOADING_TEXT }));
-      }));
+      }),
+      startWith({ blankMessage: INIT_TEXT })
+    );
   }
 
   filterChange(filter: SearchFilter) {

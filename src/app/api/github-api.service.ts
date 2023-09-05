@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { BlankResults, IssuesResults, ReposResults } from '../models';
 
+const ERROR_TEXT = 'Error! Please try again later or change your search conditions.';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,7 +30,6 @@ export class GithubApiService {
   }
 
   private handleError(err: any): Observable<BlankResults> {
-    console.log(err);
-    return of({ blankMessage: err?.error?.message ?? err?.message ?? 'Error! Please try again later or change your search conditions.' })
+    return of({ blankMessage: err?.error?.message ?? err?.message ?? ERROR_TEXT })
   }
 }
