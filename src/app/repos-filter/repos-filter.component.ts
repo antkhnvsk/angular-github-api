@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, OnInit, Output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, filter, take } from 'rxjs';
 import { SearchFilter } from '../models';
-import { debounceTime } from 'rxjs';
+import { FilterStateService } from './filter-state.service';
 
 const INPUT_DEBOUNCE_TIME = 500;
 
@@ -23,9 +24,7 @@ export class ReposFilterComponent implements OnInit {
     searchScope: 'repos'
   } as SearchFilter);
 
-  @Output() filterChange = new EventEmitter<SearchFilter>();
-
-  constructor(private fb: NonNullableFormBuilder, private destroyRef: DestroyRef) {
+  constructor(private fb: NonNullableFormBuilder, private destroyRef: DestroyRef, private filterStateService: FilterStateService) {
   }
 
   ngOnInit(): void {
@@ -43,12 +42,16 @@ export class ReposFilterComponent implements OnInit {
         }
       });
 
+    this.filterStateService.state$
+      .pipe(take(1))
+      .subscribe(state => this.form.setValue(state));
+
     this.form.valueChanges
       .pipe(
         debounceTime(INPUT_DEBOUNCE_TIME),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(() => this.filterChange.emit(this.form.getRawValue()));
+      .subscribe(() => this.filterStateService.update(this.form.getRawValue()));
   }
 }
 

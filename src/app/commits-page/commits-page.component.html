@@ -1,8 +1,11 @@
 <h2 class="mb-5">
   List of commits for
-  <a *ngIf="repo$ | async as repo" href="https://github.com/{{ repo }}">{{
-    repo
-  }}</a>
+  <a
+    *ngIf="repo$ | async as repo"
+    class="link-body-emphasis"
+    href="https://github.com/{{ repo }}"
+    >{{ repo }}</a
+  >
 </h2>
 
 <ng-container *ngIf="commits$ | async as commits">
@@ -14,9 +17,12 @@
   </div>
 
   <ng-container *ngIf="isCommits(commits) as commits">
-    <div *ngFor="let commit of commits">
-      {{ commit.commit.message }} / {{ commit.commit.author.name }} /
-      {{ commit.url }}
+    <div *ngFor="let commit of commits" class="row mb-3">
+      <div class="col-2">{{ commit.commit.author.name }}</div>
+      <div class="col-5">{{ commit.commit.message }}</div>
+      <div class="col-5 text-break">
+        <a [href]="commit.url" class="link-body-emphasis">{{ commit.url }}</a>
+      </div>
     </div>
   </ng-container>
 </ng-container>

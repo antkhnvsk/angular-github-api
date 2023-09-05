@@ -6,14 +6,16 @@
 </div>
 
 <ng-container *ngIf="isRepoResults(results) as repoResults">
-  <div *ngFor="let repo of repoResults.items" class="row mb-1">
+  <div *ngFor="let repo of repoResults.items" class="row mb-3">
     <div class="col-auto">
       <img [src]="repo.owner.avatar_url" class="avatar rounded-circle" />
     </div>
     <div class="col">
-      <a class="align-middle" [routerLink]="['/commits', repo.full_name]">{{
-        repo.full_name
-      }}</a>
+      <a
+        class="align-middle fs-5 text-break link-body-emphasis"
+        [routerLink]="['/commits', repo.full_name]"
+        >{{ repo.full_name }}</a
+      >
     </div>
     <div class="col-2">{{ repo.created_at | date }}</div>
   </div>

@@ -1,7 +1,4 @@
-<app-repos-filter
-  (filterChange)="filterChange($event)"
-  class="mb-3 d-block"
-></app-repos-filter>
+<app-repos-filter class="mb-3 d-block"></app-repos-filter>
 
 <app-repos-list
   *ngIf="results$ | async as results"
