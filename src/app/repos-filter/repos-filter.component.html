@@ -1,16 +1,44 @@
 <form [formGroup]="form">
-  <div class="input-group">
-    <input type="text" formControlName="query" class="form-control" />
-    <select formControlName="searchScope" class="form-control">
-      <option value="repos">repos</option>
-      <option value="issues">issues</option>
-    </select>
-    <input
-      formControlName="minStars"
-      type="number"
-      min="0"
-      class="form-control"
-    />
-    <input formControlName="language" type="text" class="form-control" />
+  <div class="row">
+    <div class="col-lg-6 mb-2 mb-0-lg">
+      <div class="input-group">
+        <span class="input-group-text">Search in</span>
+
+        <select formControlName="searchScope" class="form-select scope-select">
+          <option value="repos">repo name</option>
+          <option value="issues">repo's issues</option>
+        </select>
+        <input
+          type="text"
+          formControlName="query"
+          class="form-control"
+          placeholder="Octocat"
+        />
+      </div>
+    </div>
+
+    <div *ngIf="form.controls.minStars.enabled" class="col-6 col-lg-3">
+      <div class="input-group">
+        <span class="input-group-text">Minimum Stars</span>
+        <input
+          formControlName="minStars"
+          type="number"
+          min="0"
+          class="form-control"
+        />
+      </div>
+    </div>
+
+    <div *ngIf="form.controls.language.enabled" class="col-6 col-lg-3">
+      <div class="input-group">
+        <span class="input-group-text">Language</span>
+        <input
+          formControlName="language"
+          type="text"
+          class="form-control"
+          placeholder="PHP/C++/Python..."
+        />
+      </div>
+    </div>
   </div>
 </form>

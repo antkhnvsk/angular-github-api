@@ -8,7 +8,7 @@ import { ReposListComponent } from '../repos-list/repos-list.component';
 import { FilterStateService } from '../repos-filter/filter-state.service';
 
 const LOADING_TEXT = 'Loading...';
-const INIT_TEXT = 'Clarify filter to start search';
+const INIT_TEXT = 'Customize your search to see results';
 
 @Component({
   standalone: true,

@@ -16,7 +16,7 @@ export class GithubApiService {
   searchRepos(name: string, stars?: number, lang?: string): Observable<ReposResults | BlankResults> {
     const starsQuery = stars && stars > 0 ? `stars:>=${stars}` : '';
     const langQuery = lang ? `language:${lang}` : '';
-    const q = `${name} ${starsQuery} ${langQuery}`;
+    const q = `${name} ${starsQuery} ${langQuery}`.trim();
 
     return this.httpClient.get<ReposResults>(`${this.githubApiHost}/search/repositories`, {
       params: { q }

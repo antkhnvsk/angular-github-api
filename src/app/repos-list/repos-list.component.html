@@ -22,10 +22,14 @@
 </ng-container>
 
 <ng-container *ngIf="isIssuesResults(results) as issuesResults">
-  <a
-    *ngFor="let issue of issuesResults.items"
-    routerLink="/commits/{{ issue.repository_url | nameFromUrl : true }}"
-  >
-    {{ issue.repository_url | nameFromUrl }}
-  </a>
+  <div *ngFor="let issue of issuesResults.items" class="row mb-3">
+    <div class="col-12">
+      <a
+        class="align-middle fs-5 text-break link-body-emphasis"
+        routerLink="/commits/{{ issue.repository_url | nameFromUrl : true }}"
+      >
+        {{ issue.repository_url | nameFromUrl }}
+      </a>
+    </div>
+  </div>
 </ng-container>
