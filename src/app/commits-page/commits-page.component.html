@@ -1,8 +1,22 @@
-<h2>List of commits for {{ repo$ | async }}</h2>
+<h2 class="mb-5">
+  List of commits for
+  <a *ngIf="repo$ | async as repo" href="https://github.com/{{ repo }}">{{
+    repo
+  }}</a>
+</h2>
 
 <ng-container *ngIf="commits$ | async as commits">
-  <div *ngFor="let commit of commits">
-    {{ commit.commit.message }} / {{ commit.commit.author.name }} /
-    {{ commit.url }}
+  <div
+    *ngIf="isBlank(commits) as blank"
+    class="border rounded p-5 text-center text-secondary"
+  >
+    {{ blank.blankMessage }}
   </div>
+
+  <ng-container *ngIf="isCommits(commits) as commits">
+    <div *ngFor="let commit of commits">
+      {{ commit.commit.message }} / {{ commit.commit.author.name }} /
+      {{ commit.url }}
+    </div>
+  </ng-container>
 </ng-container>

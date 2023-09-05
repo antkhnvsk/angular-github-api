@@ -1,6 +1,12 @@
 export interface Repo {
   name: string;
   full_name: string;
+  owner: RepoOwner;
+  created_at: string;
+}
+
+export interface RepoOwner {
+  avatar_url: string;
 }
 
 export interface Issue {

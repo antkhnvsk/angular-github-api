@@ -1,9 +1,16 @@
 <form [formGroup]="form">
-  <input type="text" formControlName="query" />
-  <select formControlName="searchScope">
-    <option value="repos">repos</option>
-    <option value="issues">issues</option>
-  </select>
-  <input formControlName="minStars" type="number" min="0" />
-  <input formControlName="language" type="text" />
+  <div class="input-group">
+    <input type="text" formControlName="query" class="form-control" />
+    <select formControlName="searchScope" class="form-control">
+      <option value="repos">repos</option>
+      <option value="issues">issues</option>
+    </select>
+    <input
+      formControlName="minStars"
+      type="number"
+      min="0"
+      class="form-control"
+    />
+    <input formControlName="language" type="text" class="form-control" />
+  </div>
 </form>

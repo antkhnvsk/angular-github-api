@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs';
 import { GithubApiService } from '../api';
+import { BlankResults, Commit } from '../models';
 
 @Component({
   standalone: true,
@@ -17,4 +18,13 @@ export class CommitsPageComponent {
   commits$ = this.repo$.pipe(switchMap(repo => this.githubApiService.getCommits(repo)));
 
   constructor(private activatedRoute: ActivatedRoute, private githubApiService: GithubApiService) { }
+
+
+  isBlank(results: Commit[] | BlankResults): BlankResults | null {
+    return 'blankMessage' in results ? results : null;
+  }
+
+  isCommits(results: Commit[] | BlankResults): Commit[] | null {
+    return !('blankMessage' in results) ? results : null;
+  }
 }
