@@ -1,0 +1,1 @@
+export { ReposPageComponent } from './repos-page.component';
