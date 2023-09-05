@@ -29,7 +29,7 @@ export class GithubApiService {
     }).pipe(catchError(err => this.handleError(err)))
   }
 
-  commits(ownerAndRepo: string): Observable<Commit[]> {
+  getCommits(ownerAndRepo: string): Observable<Commit[]> {
     return this.httpClient.get<Commit[]>(`${this.githubApiHost}/repos/${ownerAndRepo}/commits`);
   }
 

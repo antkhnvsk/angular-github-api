@@ -14,7 +14,7 @@ import { GithubApiService } from '../api';
 })
 export class CommitsPageComponent {
   repo$ = this.activatedRoute.params.pipe(map((data) => decodeURIComponent(data['repo'])));
-  commits$ = this.repo$.pipe(switchMap(repo => this.githubApiService.commits(repo)));
+  commits$ = this.repo$.pipe(switchMap(repo => this.githubApiService.getCommits(repo)));
 
   constructor(private activatedRoute: ActivatedRoute, private githubApiService: GithubApiService) { }
 }
