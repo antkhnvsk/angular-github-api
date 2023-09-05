@@ -19,9 +19,11 @@
   <ng-container *ngIf="isCommits(commits) as commits">
     <div *ngFor="let commit of commits" class="row mb-3">
       <div class="col-2">{{ commit.commit.author.name }}</div>
-      <div class="col-5">{{ commit.commit.message }}</div>
-      <div class="col-5 text-break">
-        <a [href]="commit.url" class="link-body-emphasis">{{ commit.url }}</a>
+      <div class="col-5 col-xxl-6">{{ commit.commit.message }}</div>
+      <div class="col-5 col-xxl-4 text-break">
+        <a [href]="commit.html_url" class="link-body-emphasis">{{
+          commit.html_url | commitHash
+        }}</a>
       </div>
     </div>
   </ng-container>

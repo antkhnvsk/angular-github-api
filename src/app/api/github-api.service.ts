@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, inject } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
 import { BlankResults, Commit, IssuesResults, ReposResults } from '../models';
+import { GITHUB_API_HOST } from '../app-tokens';
 
 const ERROR_TEXT = 'Error! Please try again later or change your search conditions.';
 
@@ -9,14 +10,13 @@ const ERROR_TEXT = 'Error! Please try again later or change your search conditio
   providedIn: 'root'
 })
 export class GithubApiService {
-  private githubApiHost = 'https://api.github.com'; // todo: move out
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, @Inject(GITHUB_API_HOST) private githubApiHost: string) { }
 
   searchRepos(name: string, stars?: number, lang?: string): Observable<ReposResults | BlankResults> {
-    const starsQuery = stars && stars > 0 ? `stars:>=${stars}` : '';
+    const nameQuery = name ? `${name} in:name` : '';
+    const starsQuery = stars ? `stars:>=${stars}` : '';
     const langQuery = lang ? `language:${lang}` : '';
-    const q = `${name} ${starsQuery} ${langQuery}`.trim();
+    const q = `${nameQuery} ${starsQuery} ${langQuery}`.trim();
 
     return this.httpClient.get<ReposResults>(`${this.githubApiHost}/search/repositories`, {
       params: { q }
@@ -34,6 +34,8 @@ export class GithubApiService {
   }
 
   private handleError(err: any): Observable<BlankResults> {
-    return of({ blankMessage: err?.error?.message ?? err?.message ?? ERROR_TEXT })
+    return of({
+      blankMessage: err?.error?.message ?? err?.message ?? ERROR_TEXT
+    })
   }
 }

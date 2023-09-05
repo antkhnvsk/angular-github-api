@@ -5,10 +5,11 @@ import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs';
 import { GithubApiService } from '../api';
 import { BlankResults, Commit } from '../models';
+import { CommitHashPipe } from '../pipes';
 
 @Component({
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CommitHashPipe],
   templateUrl: './commits-page.component.html',
   styleUrls: ['./commits-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

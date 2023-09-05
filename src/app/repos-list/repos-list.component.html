@@ -19,6 +19,10 @@
     </div>
     <div class="col-2">{{ repo.created_at | date }}</div>
   </div>
+
+  <div class="text-center text-secondary p-3">
+    Total: {{ repoResults.total_count | number }}
+  </div>
 </ng-container>
 
 <ng-container *ngIf="isIssuesResults(results) as issuesResults">
@@ -31,5 +35,9 @@
         {{ issue.repository_url | nameFromUrl }}
       </a>
     </div>
+  </div>
+
+  <div class="text-center text-secondary p-3">
+    Total: {{ issuesResults.total_count | number }}
   </div>
 </ng-container>
