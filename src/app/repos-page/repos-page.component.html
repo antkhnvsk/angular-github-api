@@ -1,1 +1,6 @@
-<p>repos-page works!</p>
+<ng-container *ngIf="repos$ | async as repos">
+  <div>Total: {{ repos.total_count }}</div>
+  <div *ngFor="let repo of repos.items">
+    {{ repo.name }}
+  </div>
+</ng-container>
