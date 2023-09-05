@@ -5,9 +5,10 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true
 })
 export class NameFromUrlPipe implements PipeTransform {
-  transform(url: string): any {
+  transform(url: string, needEncode = false): any {
     const matches = /repos\/(.*)/g.exec(url);
+    const name = matches?.[1] ?? '';
 
-    return matches?.[1] ?? url;
+    return needEncode ? encodeURIComponent(name) : name;
   }
 }

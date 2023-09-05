@@ -3,13 +3,19 @@
 </div>
 
 <ng-container *ngIf="isRepoResults(results) as repoResults">
-  <div *ngFor="let repo of repoResults.items">
+  <a
+    *ngFor="let repo of repoResults.items"
+    [routerLink]="['/commits', repo.full_name]"
+  >
     {{ repo.full_name }}
-  </div>
+  </a>
 </ng-container>
 
 <ng-container *ngIf="isIssuesResults(results) as issuesResults">
-  <div *ngFor="let issue of issuesResults.items">
+  <a
+    *ngFor="let issue of issuesResults.items"
+    routerLink="/commits/{{ issue.repository_url | nameFromUrl : true }}"
+  >
     {{ issue.repository_url | nameFromUrl }}
-  </div>
+  </a>
 </ng-container>

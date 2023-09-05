@@ -1,0 +1,1 @@
+export * from './commits-page.component'
