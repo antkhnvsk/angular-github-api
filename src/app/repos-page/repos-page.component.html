@@ -4,3 +4,12 @@
     {{ repo.name }}
   </div>
 </ng-container>
+
+<hr />
+
+<ng-container *ngIf="issues$ | async as issue">
+  <div>Total: {{ issue.total_count }}</div>
+  <div *ngFor="let issue of issue.items">
+    {{ issue.repository_url }}
+  </div>
+</ng-container>

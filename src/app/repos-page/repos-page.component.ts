@@ -10,8 +10,8 @@ import { GithubApiService } from '../api/github-api.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReposPageComponent {
-  repos$ = this.githubApiService.searchReposByName('name');
-  constructor(private githubApiService: GithubApiService) {
+  repos$ = this.githubApiService.searchRepos('octopress');
+  issues$ = this.githubApiService.searchIssues('octopress');
 
-  }
+  constructor(private githubApiService: GithubApiService) { }
 }
