@@ -2,3 +2,13 @@
   width: 36px;
   height: 36px;
 }
+
+.issue,
+.repo {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.75;
+  }
+}

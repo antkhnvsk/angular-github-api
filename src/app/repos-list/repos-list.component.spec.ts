@@ -61,7 +61,7 @@ describe('ReposListComponent', () => {
       }]
     } as IssuesResults)
 
-    const link = spectator.query('.issue a');
+    const link = spectator.query('.issue .col-12');
 
     expect(link).toContainText('repo_url');
   });
