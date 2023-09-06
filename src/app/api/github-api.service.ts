@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable, inject } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
-import { BlankResults, Commit, IssuesResults, ReposResults } from '../models';
 import { GITHUB_API_HOST } from '../app-tokens';
+import { BlankResults, Commit, IssuesResults, ReposResults } from '../models';
 
 const ERROR_TEXT = 'Error! Please try again later or change your search conditions.';
 
@@ -24,13 +24,16 @@ export class GithubApiService {
   }
 
   searchIssues(issue: string): Observable<IssuesResults | BlankResults> {
+    const issueQuery = issue ? `${issue} is:issue` : '';
+
     return this.httpClient.get<IssuesResults>(`${this.githubApiHost}/search/issues`, {
-      params: { q: issue }
+      params: { q: issueQuery }
     }).pipe(catchError(err => this.handleError(err)))
   }
 
   getCommits(ownerAndRepo: string): Observable<Commit[] | BlankResults> {
-    return this.httpClient.get<Commit[]>(`${this.githubApiHost}/repos/${ownerAndRepo}/commits`).pipe(catchError(err => this.handleError(err)));
+    return this.httpClient.get<Commit[]>(`${this.githubApiHost}/repos/${ownerAndRepo}/commits`)
+      .pipe(catchError(err => this.handleError(err)));
   }
 
   private handleError(err: any): Observable<BlankResults> {
