@@ -1,21 +1,26 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { Spectator, createRoutingFactory, } from '@ngneat/spectator';
+import { GithubApiService } from '../api';
 import { CommitsPageComponent } from './commits-page.component';
-
+import { MockProvider, MockProviders } from 'ng-mocks';
+import { of } from 'rxjs';
 describe('CommitsPageComponent', () => {
-  let component: CommitsPageComponent;
-  let fixture: ComponentFixture<CommitsPageComponent>;
+  let spectator: Spectator<CommitsPageComponent>;
+
+  const createComponent = createRoutingFactory({
+    component: CommitsPageComponent,
+    shallow: true,
+    params: { repo: 'user/repo' },
+    providers: [
+      MockProvider(GithubApiService, { getCommits: () => of([]) }),
+    ]
+  });
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [CommitsPageComponent]
-    });
-    fixture = TestBed.createComponent(CommitsPageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    spectator = createComponent();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator.component).toBeTruthy();
   });
 });

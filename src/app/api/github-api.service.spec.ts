@@ -1,16 +1,22 @@
-import { TestBed } from '@angular/core/testing';
 
+import { SpectatorService, createServiceFactory } from '@ngneat/spectator';
 import { GithubApiService } from './github-api.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { GITHUB_API_HOST } from '../app-tokens';
 
 describe('GithubApiService', () => {
-  let service: GithubApiService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(GithubApiService);
+  let spectator: SpectatorService<GithubApiService>;
+  const createService = createServiceFactory({
+    service: GithubApiService,
+    imports: [HttpClientTestingModule],
+    providers: [{ provide: GITHUB_API_HOST, useValue: '' }]
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  beforeEach(() => spectator = createService());
+
+  it('loading commits', () => {
+    let result;
+    spectator.service.getCommits('abc').subscribe(res => result = res);
+    expect(result).toBeFalsy();
   });
 });
