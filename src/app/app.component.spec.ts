@@ -1,7 +1,6 @@
-import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Spectator, createComponentFactory } from '@ngneat/spectator';
 import { AppComponent } from './app.component';
-import { Spectator, createComponentFactory } from '@ngneat/spectator'
 
 describe('AppComponent', () => {
   let spectator: Spectator<AppComponent>;
@@ -16,7 +15,7 @@ describe('AppComponent', () => {
     spectator = createComponent();
   });
 
-  it('should create', () => {
+  it('create', () => {
     expect(spectator.component).toBeTruthy();
   });
 });

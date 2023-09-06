@@ -1,16 +1,28 @@
-import { TestBed } from '@angular/core/testing';
-
+import { SpectatorService, createServiceFactory } from '@ngneat/spectator';
+import { take } from 'rxjs';
 import { FilterStateService } from './filter-state.service';
 
 describe('FilterStateService', () => {
-  let service: FilterStateService;
+  let spectator: SpectatorService<FilterStateService>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(FilterStateService);
+  const createService = createServiceFactory({
+    service: FilterStateService,
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  beforeEach(() => spectator = createService());
+
+  it('doesn`t return initial empty state', () => {
+    let state: any = 'untouched';
+    spectator.service.state$.pipe(take(1)).subscribe(s => state = s).unsubscribe();
+    expect(state).toBe('untouched');
+  });
+
+  it('update state', () => {
+    let state: any = 'untouched';
+
+    spectator.service.update({ language: '', minStars: 0, query: '', searchScope: 'repos' });
+    spectator.service.state$.pipe(take(1)).subscribe(s => state = s).unsubscribe();
+
+    expect(state).toEqual({ language: '', minStars: 0, query: '', searchScope: 'repos' });
   });
 });

@@ -6,6 +6,7 @@ import { GITHUB_API_HOST } from '../app-tokens';
 
 describe('GithubApiService', () => {
   let spectator: SpectatorService<GithubApiService>;
+
   const createService = createServiceFactory({
     service: GithubApiService,
     imports: [HttpClientTestingModule],
